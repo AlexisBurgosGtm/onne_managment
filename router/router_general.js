@@ -8,10 +8,7 @@ router.post("/login", async(req,res)=>{
     const { u,p,TOKEN } = req.body;
 
     let qry = `
-        SELECT 
-            USUARIO, 
-            'LOCAL' AS TOKEN, 
-            NIVEL
+        SELECT USUARIO, NIVEL
         FROM USUARIOS
         WHERE (USUARIO = '${u}') 
             AND (WEBPASS = '${p}')`
@@ -26,8 +23,7 @@ router.post("/empresas", async(req,res)=>{
     const { TOKEN} = req.body;
 
     let qry = `
-        SELECT 
-            EMPNIT,EMPNOMBRE, CODTIPOEMPRESA FROM EMPRESAS
+        SELECT EMPNIT, EMPNOMBRE, CODTIPOEMPRESA FROM EMPRESAS
          `
          //   WHERE NOSUCURSAL='SI';
     

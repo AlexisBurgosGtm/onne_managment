@@ -77,6 +77,9 @@ function addListeners(){
     
     TOKEN = 'LOCAL';
 
+    let btnIniciar = document.getElementById('btnIniciar');
+    btnIniciar.disabled = true;    
+
         get_data_empresas()
         .then((data)=>{
             let str = '';
@@ -87,14 +90,15 @@ function addListeners(){
             })
 
             cmbEmpresa.innerHTML = str;
+
+            btnIniciar.disabled = false;
+
         })
         
         
         GlobalNivelUsuario = 0;
-        //data_empresas = [];
-         `<option value=''>No hay empresas disponibles...</option>`;
-
-        let btnIniciar = document.getElementById('btnIniciar');
+       
+        
         btnIniciar.addEventListener('click',()=>{
             
             let u = document.getElementById('txtUser').value || '';
@@ -265,10 +269,6 @@ function login(u,p){
     
     
     return new Promise((resolve,reject)=>{
-
-     
-        //resolve(data);
-        //return;
 
         axios.post(GlobalUrlCalls + '/general/login',
             {

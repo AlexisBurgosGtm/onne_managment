@@ -50,7 +50,7 @@ let Navegar = {
     },
     inicio_ventas:()=>{
         if(Number(GlobalNivelUsuario)==0){return;}
-        funciones.loadScript('../views/inicio_ventas.js','root')
+        funciones.loadScript('../views/managment_ventas/view_vendedor.js','root')
         .then(async()=>{
             initView();
         })

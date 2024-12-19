@@ -1,5 +1,5 @@
 ﻿
-let versionapp = "Modif: 04.2024"
+let versionapp = "Modif: 12.2024"
 
 let btnMenu = document.getElementById('btnMenu');
 

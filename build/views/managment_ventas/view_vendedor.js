@@ -5,19 +5,21 @@ function getView(){
             return `
                 <div class="row">
                     <div class="col-1 text-left">
-                            <img src="./favicon.png" width="80px" height="60px">
+                            <img src="./favicon.png" width="80px" height="80px">
                     </div>
-                    <div class="card bg-primary card-rounded shadow col-11 p-2">
+                    <div class="card border-primary card-rounded shadow col-11 p-2">
                         
                             <div class="row">
-                                <div class="col-4 text-left">
-                                    <label class="text-white negrita h5" style="font-size:180%">Punto de Venta</label>
+                                <div class="col-4 text-left">   
+                                    <label class="text-primary negrita h5" style="font-size:120%">Punto de Venta</label>
+                                    <br>
+                                    <label class="text-primary negrita h5" style="font-size:120%" id="lbTotalItems">0 items</label>
                                 </div>
-                                <div class="col-4 text-left">
-                                    <label class="text-white negrita h5" style="font-size:140%" id="lbTotalItems">0 items</label>
-                                </div>
-                                <div class="col-4 text-right">
-                                    <h1 class="text-white negrita" id="lbTotalVenta">Q 0.00</h1>
+                                
+                                <div class="col-8 text-right">
+                                    <h5 class="text-secondary negrita" id="lbTotalVenta">Q 0.00</h5>
+                                    <h5 class="text-danger negrita" id="lbTotalDescuento">Q 0.00</h5>
+                                    <h1 class="text-primary negrita" id="lbTotalVentaDescuento">Q 0.00</h1>
                                 </div>
                             </div>
                         
@@ -27,8 +29,8 @@ function getView(){
                 <div class="col-12 p-0">
                     <div class="tab-content" id="myTabHomeContent">
                         <div class="tab-pane fade show active" id="pedido" role="tabpanel" aria-labelledby="dias-tab">
-                            ${view.pedido() + view.modal_cantidad() + view.modal_editar_cantidad() + view.modal_lista_documentos()}
-                        </div>
+                            ${view.pedido() + view.modal_cantidad() + view.modal_editar_cantidad() + view.modal_lista_precios() + view.modal_lista_documentos() }
+                        </div> 
                         <div class="tab-pane fade" id="precios" role="tabpanel" aria-labelledby="clientes-tab">
                           
                         </div>
@@ -59,51 +61,56 @@ function getView(){
             return `
             <div class="row">
 
-                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                <div class="col-12">
 
-                    <input type="search" autocomplete="off" class="form-control border-primary negrita" placeholder='Escriba para buscar...' id="txtPosCodprod">
-                    
-                    <div class="table-responsive col-12 p-2">
-                        <table class="table table-responsive table-hover table-border col-12 h-fulls" id="tblProductosBuscar">
-                            <thead class="bg-primary text-white">
-                                <tr>
-                                    <td>Producto</td>
-                                    <td>Medida</td>
-                                    <td>Precio Un.</td>
-                                    <td>Existencia</td>
-                                </tr>
-                            </thead>
-                            <tbody  id="tblPosProductosCategoria"></tbody>
-                        </table>
-                    </div>  
-                </div>
-                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                    <div class="card card-rounded shadow border-primary col-12 p-2">
-                        <div class="card-body">
-                            
-                            <div class="row">
-                                <div class="col-12">
-                                    <b class="text-primary">Productos agregados a la Factura</b>
+                                  
+               
+                <hr class="solid">
+                
+                   <div class="row">
+                      
+                        <div class="col-12">
+                            <div class="card card-rounded shadow border-primary col-12 p-2">
+                                <div class="card-body">
+                                    
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                           
+                                            <input type="text" autocomplete="off" class="form-control border-primary negrita col-7" placeholder='Escriba para buscar...' id="txtPosCodprod">
+                                            <button class="btn btn-primary hand col-1" id="btnBuscarProd">
+                                                <i class="fal fa-search"></i>
+                                            </button>
+                                                                                    
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-12">
+                                            <b class="text-primary">Productos agregados a la Factura</b>
+                                        </div>
+                                    </div>
+                                    <table class="table table-responsive  table-hover col-12 h-full">
+                                        <thead class="bg-info text-white">
+                                            <tr>
+                                                <td>PRODUCTO</td>
+                                                <td>MEDIDA</td>
+                                                <td>CANTIDAD</td>
+                                                <td>PRECIO</td>
+                                                <td>SUBTOTAL</td>
+                                                <td>DESCUENTO</td>
+                                                <td>IMPORTE</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tblPosPedido"></tbody>
+                                    </table>
                                 </div>
                             </div>
-                            
-                           
-                                <table class="table table-responsive  table-hover col-12">
-                                    <thead class="bg-primary text-white">
-                                        <tr>
-                                            <td>PRODUCTO</td>
-                                            <td>CANTIDAD</td>
-                                            <td>PRECIO</td>
-                                            <td>SUBTOTAL</td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tblPosPedido"></tbody>
-                                </table>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
             
@@ -112,14 +119,54 @@ function getView(){
 
             </div>
 
-            <button class="btn btn-warning btn-xl btn-bottom-middle btn-circle shadow hand" id="btnListadoDocumentos">
-                <i class="fal fa-folder"></i>
+            <button class="btn btn-warning btn-xl btn-bottom-l btn-circle shadow hand" id="btnListadoDocumentos">
+                <i class="fal fa-folder"></i>  
             </button>
             
             <button class="btn btn-info btn-xl btn-bottom-r btn-circle shadow hand" id="btnPosCobro">
                 <i class="fal fa-arrow-right"></i>
             </button>
             `
+        },
+        modal_lista_precios:()=>{
+            return `
+            <div class="modal modal-with-scroll" id="modal_lista_precios" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-content">
+            
+                        <div class="modal-body p-4">
+                            <label class="modal-title text-primary h3" id="">Buscar producto</label>
+
+                                    <table class="table table-responsive  table-hover table-bordered h-full" id="tblProductos">
+                                        <thead class="bg-primary text-white">
+                                            <tr>
+                                                <td>MARCA</td>
+                                                <td>PRODUCTO</td>
+                                                <td>MEDIDA</td>
+                                                <td>PRECIO</td>
+                                                <td>EXISTENCIA</td>
+                                                <td>IPs</td>
+                                                <td>TIPO</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tblDataProductos"></tbody>
+                                    </table>
+
+                            <br>
+
+                            <div class="row">
+                                    <div class="text-left">
+                                        <button class="btn btn-secondary btn-xl btn-circle hand shadow waves-effect waves-themed" data-dismiss="modal" id="">
+                                            <i class="fal fa-arrow-left"></i>
+                                        </button>                                
+                                    </div>
+        
+                                   
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`
         },
         modal_cantidad:()=>{
             return `
@@ -132,6 +179,8 @@ function getView(){
                         </div>
             
                         <div class="modal-body p-4">
+                            <div class="" id="container_precio">
+                            </div>
                             <div class="row">
                                 <div class="col-4 text-center">
                                     <img src="./favicon.png" width="120px" height="100px">
@@ -151,11 +200,23 @@ function getView(){
                                         <label class="negrita text-secondary">Subtotal ${GlobalSignoMoneda}:</label>
                                         <input type="number" style="font-size:150%" class="form-control negrita text-danger border-primary shadow col-10" id="txtMCTotalPrecio" disabled>
                                     </div>
+
+                                    <div class="form-group">
+                                        <label class="negrita text-secondary">Descuento ${GlobalSignoMoneda}:</label>
+                                        <input type="number" style="font-size:140%" class="form-control negrita text-info border-primary shadow col-10" id="txtMCDescuento" oninput="calcular_descuento('txtMCDescuento','txtMCTotalPrecio','txtMCTotalPrecioDescuento')">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="negrita text-secondary">Importe ${GlobalSignoMoneda}:</label>
+                                        <input type="number" style="font-size:150%" class="form-control negrita text-danger border-primary shadow col-10" id="txtMCTotalPrecioDescuento" disabled>
+                                    </div>
+
+
                                 </div>            
                             </div>
                                 
                             <br>
-        
+
                             <div class="row">
                                     <div class="col-5 text-right">
                                         <button class="btn btn-secondary btn-xl btn-circle hand shadow waves-effect waves-themed" data-dismiss="modal" id="">
@@ -206,6 +267,19 @@ function getView(){
                                         <label class="negrita text-secondary">Subtotal ${GlobalSignoMoneda}:</label>
                                         <input type="number" style="font-size:150%" class="form-control negrita text-danger border-primary shadow col-10" id="txtMCTotalPrecioE" disabled>
                                     </div>
+
+
+                                    <div class="form-group">
+                                        <label class="negrita text-secondary">Descuento ${GlobalSignoMoneda}:</label>
+                                        <input type="number" style="font-size:140%" class="form-control negrita text-info border-primary shadow col-10" id="txtMCDescuentoE" oninput="calcular_descuento('txtMCDescuentoE','txtMCTotalPrecioE','txtMCTotalPrecioDescuentoE')">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="negrita text-secondary">Importe ${GlobalSignoMoneda}:</label>
+                                        <input type="number" style="font-size:150%" class="form-control negrita text-danger border-primary shadow col-10" id="txtMCTotalPrecioDescuentoE" disabled>
+                                    </div>
+
+
                                 </div>            
                             </div>
                                 
@@ -239,83 +313,85 @@ function getView(){
                 </div>
 
                 <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
-                    <div class="card card-rounded shadow col-12">
+                    <div class="card card-rounded shadow col-12 border-primary">
                         <div class="card-body">
+
                             <div class="row">
-                                <div class="col-6">
+                                <div class="form-group">
+                                    <label class="text-secondary">Tipo de Documento</label>
+                                    <select class="form-control col-12" id="cmbTipoDocumento">
+                                        <option value="FEL">MODO A</option>    
+                                        <option value="FAC">MODO B</option>
+                                        <option value="COT">COTIZACIÓN</option>
+                                    </select>   
+                                </div>
+                                <div class="form-group text-left">
+                                    <label class="text-secondary">Serie Documento</label>
+                                    <div class="input-group">
+                                        <select class="form-control col-12" id="cmbCoddoc">
+                                        </select>
+                                        <input type="number" id="txtCorrelativo" class="form-control" disabled="true" value=0>
+                                    </div>    
+                                </div>
+                            </div>
+                            <br>
+
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                    <div class="form-group text-left">
+                                        <label class="text-secondary">Caja</label>
+                                        <div class="input-group">
+                                            <select class="form-control col-12" id="cmbCaja">
+                                            </select>
+                                            <input type="date" id="txtFecha" class="form-control text-primary negrita border-primary">
+                                        </div>
+                                    </div>
+                                    
                                     <div class="form-group text-left">
                                         <label class="text-secondary">Vendedor</label>
-                                        <select class="form-control" id="cmbVendedor">
-                                        </select>
+                                        <select class="form-control col-12" id="cmbVendedor">
+                                        </select>   
                                     </div>
-                                </div>
-                                <div class="col-6">
+
+                                    <div class="">
+                                        
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input hand" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="mostrador" checked>
+                                            <label class="form-check-label negrita text-primary hand" for="inlineRadio1">Mostrador  </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input hand" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="domicilio">
+                                            <label class="form-check-label negrita text-primary hand" for="inlineRadio2">Domicilio  </label>
+                                        </div>
+                                         <div class="form-check form-check-inline">
+                                            <input class="form-check-input hand" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="callcenter">
+                                            <label class="form-check-label negrita text-primary hand" for="inlineRadio3">Call Center</label>
+                                        </div>
+
+                                    </div>
+
+                                </div>    
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group text-right">
                                         <label class="negrita text-secondary h4">Total a Pagar</label>
                                         <h2 class="negrita text-danger" style="font-size:280%" id="lbPosCobroTotalPagar">Q 0.00</h2>
-                                    </div>         
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-4">
-                                    <button class="btn btn-outline-primary shadow hand col-12" onclick="document.getElementById('tab-crear-factura').click()">
-                                        Crear Factura Contable
-                                    </button>
-                                </div>
-                                <div class="col-4">
-                                    <button class="btn btn-outline-primary shadow hand col-12" onclick="document.getElementById('tab-crear-pedido').click()">
-                                        Crear Factura Interna
-                                    </button>
-                                </div>
-                                <div class="col-4">
-                                    <button class="btn btn-outline-primary shadow hand col-12" onclick="document.getElementById('tab-crear-cotizacion').click()">
-                                        Crear Cotización
-                                    </button>
-                                </div>
-                            </div>
+                            </div>  
+                            
                         </div>
                     </div>
-                    <hr>
-                    
-                    ${view.documento_tipos_body()}
+                
                 </div>
             </div>
 
             <button class="btn btn-secondary btn-xl btn-bottom-l btn-circle shadow hand" id="btnPosDocumentoAtras">
                 <i class="fal fa-arrow-left"></i>
             </button>
-            `
-        },
-        documento_tipos_body:()=>{
-            return `
-                <div class="col-12 p-0">
-                    
-                    <div class="tab-content" id="">
-                        <div class="tab-pane fade show active" id="crear_factura" role="tabpanel" aria-labelledby="dias-tab">
-                            ${view.documento_card_factura()}
-                        </div>
-                        <div class="tab-pane fade" id="crear_pedido" role="tabpanel" aria-labelledby="clientes-tab">
-                          
-                        </div>
-                        <div class="tab-pane fade" id="crear_cotizacion" role="tabpanel" aria-labelledby="home-tab">
-                            ${view.documento_card_cotizacion()}
-                        </div>
-                    </div>
-                    <ul class="nav nav-tabs table-border hidden" id="myTabHome2" role="tablist">
-                        <li class="nav-item negrita text-primary">
-                            <a class="nav-link active" id="tab-crear-factura" data-toggle="tab" href="#crear_factura" role="tab" aria-controls="profile" aria-selected="false">
-                                <i class="fal fa-list"></i></a>Factura Contable
-                        </li>
-                        <li class="nav-item negrita text-info">
-                            <a class="nav-link negrita" id="tab-crear-pedido" data-toggle="tab" href="#crear_pedido" role="tab" aria-controls="home" aria-selected="true">
-                                <i class="fal fa-edit"></i></a>Factura Interna
-                        </li> 
-                        <li class="nav-item negrita text-success">
-                            <a class="nav-link" id="tab-crear-cotizacion" data-toggle="tab" href="#crear_cotizacion" role="tab" aria-controls="home" aria-selected="true">
-                                <i class="fal fa-sync"></i></a>Cotización
-                        </li>                           
-                    </ul>
-                </div>
+
+            <button class="btn btn-info btn-xl btn-bottom-r btn-circle shadow" id="btnGuardarFactura">
+                <i class="fal fa-save"></i>
+            </button>
             `
         },
         documento_card_cliente:()=>{
@@ -326,7 +402,7 @@ function getView(){
                             <div class="form-group">
                                 <label class="negrita text-primary">NIT / DPI</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control form-control-md border-primary negrita text-primary" id="txtPosCobroNit">
+                                    <input type="text" class="form-control form-control-md border-primary negrita text-secondary" id="txtPosCobroNit">
                                     <button class="btn btn-primary text-white hand" id="btnBuscarCliente">
                                         <i class="fal fa-search"></i>
                                     </button>
@@ -335,46 +411,41 @@ function getView(){
                             
                             </div>
 
-                            <div class="form-group">
-                                <label class="negrita text-primary">CÓDIGO CLIENTE</label>
-                                <input disabled type="text" class="form-control form-control-md border-primary negrita text-primary" id="txtPosCobroNitclie" autocomplete="off">                            
-                            </div>
-
+                        
                             <div class="form-group">
                                 <label class="negrita text-primary">CLIENTE</label>
-                                <input type="text" class="form-control form-control-md border-primary negrita text-primary" id="txtPosCobroNombre">
+                                <input type="text" class="form-control form-control-md border-primary negrita text-secondary" id="txtPosCobroNombre">
                             </div>
                             
                             <div class="form-group">
                                 <label class="negrita text-primary">DIRECCIÓN</label>
-                                <input type="text" class="form-control form-control-md border-primary negrita text-primary" id="txtPosCobroDireccion">
+                                <input type="text" class="form-control form-control-md border-primary negrita text-secondary" id="txtPosCobroDireccion">
                             </div>
+
+                            <div class="form-group">
+                                <label class="negrita text-primary">TELÉFONO/S</label>
+                                <input type="text" class="form-control form-control-md border-primary negrita text-secondary" id="txtPosCobroTelefono">
+                            </div>
+
+                            <div class="text-right">
+                                <button class="btn btn-info hand text-white" id="btnNuevoCliente">
+                                    <i class="fal fa-plus"></i> Crear Nuevo cliente
+                                </button>
+                            </div>
+
+                            <div class="form-group hidden">
+                                <label class="negrita text-primary">CÓDIGO CLIENTE</label>
+                                <input disabled type="text" class="form-control form-control-md border-primary negrita text-secondary" id="txtPosCobroNitclie" autocomplete="off">                            
+                            </div>
+
+                          
+
+                                       
+
 
                         </div>
                     </div>
-            `
-        },
-        documento_card_factura:()=>{
-            return `
-            <div class="card card-rounded shadow col-12">
-                <div class="card-body">
-                    <input type="date" id="txtFecha">
-                    <select id="cmbCoddoc"></select>
-                    <input type="text" id="txtCorrelativo">
-                </div>
-            </div>
-            `
-        },
-        documento_card_cotizacion:()=>{
-            return `
-            <div class="card card-rounded shadow col-12">
-                <div class="card-body">
-                    <input type="date" id="txtFecha">
-                    <select id="cmbCoddocCot"></select>
-                    <input type="text" id="txtCorrelativoCot">
-                </div>
-            </div>
-            `
+            `   
         },
         modal_lista_clientes:()=>{
             return `
@@ -404,6 +475,7 @@ function getView(){
                                         <tr>
                                             <td>NIT / CÓDIGO</td>
                                             <td>CLIENTE</td>
+                                            <td>TELÉFONO</td>
                                             <td>SALDO</td>
                                         </tr>
                                     </thead>
@@ -430,8 +502,9 @@ function getView(){
                                         <div class="input-group">
                                             <input type="date" class="negrita form-control" id="txtFechaDoc">
                                             <select class="form-control negrita" id="cmbTipoDoc">
-                                                <option value="PED">PEDIDOS</option>
-                                                <option value="COT">COTIZACIONES</option>
+                                                <option value="FAC">FACTURAS NORMALES</option>
+                                                <option value="FEF">FACTURAS IVA (CONTADO)</option>
+                                                <option value="FEC">FACTURAS CAMBIARIAS IVA (CREDITO)</option>
                                             </select>
                                         </div>
                                         
@@ -456,6 +529,7 @@ function getView(){
 
 function addListeners(){
 
+    document.title = "Ventas";
 
     funciones.slideAnimationTabs();
 
@@ -476,88 +550,121 @@ function addListeners(){
 
 
     document.getElementById('txtFecha').value = funciones.getFecha();
-    //document.getElementById('txtFechaDoc').value = funciones.getFecha();
+    
+   
+    
+    //carga el código vendedor
+    get_vendedores();
+
+
+    //carga las cajas
+    get_cajas();
+    
+    listener_coddoc();
 
    
 
-    //CARGA CODDOC DEFAULT
-    let cmbCoddoc = document.getElementById('cmbCoddoc');
-    let cmbCoddocCot = document.getElementById('cmbCoddocCot');
-    
-    get_coddoc('PED')
-        .then((data)=>{
-            let str = '';
-            data.recordset.map((r)=>{
-                str += `<option value="${r.CODDOC}">${r.CODDOC}</option>`;
-            })
-            cmbCoddoc.innerHTML = str;
-            cmbCoddoc.value = GlobalCoddoc;
-            get_correlativo_coddoc(cmbCoddoc.value)
-            .then((correlativo)=>{
-                document.getElementById('txtCorrelativo').value = correlativo;
-            })
-        })
-        .catch(()=>{
-            cmbCoddoc.innerHTML = '';
-            document.getElementById('txtCorrelativo').value = '';
-        });
+    let btnGuardarFactura = document.getElementById('btnGuardarFactura');
+    btnGuardarFactura.addEventListener('click',()=>{
 
-    get_coddoc('COT')
-        .then((data)=>{
-            let strs = '';
-            data.recordset.map((r)=>{
-                strs += `<option value="${r.CODDOC}">${r.CODDOC}</option>`;
-            })
-            cmbCoddocCot.innerHTML = strs;
-            cmbCoddocCot.value = GlobalCotiz;
-            get_correlativo_coddoc(cmbCoddocCot.value)
-            .then((correlativo)=>{
-                document.getElementById('txtCorrelativoCot').value = correlativo;
-            })
+       
+
+        funciones.Confirmacion("¿Está seguro que desea Guardar esta Venta?")
+        .then((value)=>{
+            if(value==true){
+
+                finalizar_pedido()
+               
+            }
         })
-        .catch(()=>{
-            cmbCoddocCot.innerHTML = '';
-            document.getElementById('txtCorrelativoCot').value = '';
-        });
-    
-    
-    cmbCoddoc.addEventListener('change',()=>{
-            get_correlativo_coddoc(cmbCoddoc.value)
-            .then((correlativo)=>{
-                document.getElementById('txtCorrelativo').value = correlativo;
-            })
+        
+
     });
 
-    cmbCoddocCot.addEventListener('change',()=>{
-        get_correlativo_coddoc(cmbCoddocCot.value)
-        .then((correlativo)=>{
-            document.getElementById('txtCorrelativoCot').value = correlativo;
-        })
-    });
 
-    //carga el código vendedor
-    get_vendedores()
-    .then((data)=>{
-        let container = document.getElementById('cmbVendedor');
-        let str = '';
-        data.recordset.map((rows)=>{
-            str += `<option value="${rows.CODIGO}">${rows.NOMBRE}</option>`
-        })            
-        container.innerHTML = str;
-        container.value = GlobalCodUsuario;
-    })
-    .catch(()=>{
-        funciones.AvisoError('No se cargó la lista de vendedores');
-    })
-    
-  
+    document.getElementById('txtPosCodprod').focus();
 
 };
 
+
+
+function listener_coddoc(){
+
+    let cmbTipoDocumento = document.getElementById('cmbTipoDocumento')
+    cmbTipoDocumento.addEventListener('change',()=>{
+        get_coddoc(cmbTipoDocumento.value);
+    })
+
+    function get_coddoc(tipo){
+        let container = document.getElementById('cmbCoddoc');
+        container.innerHTML = '';
+
+        axios.post('/tipodocumentos/coddoc',{
+            sucursal:GlobalEmpnit,
+            tipo:tipo,
+            token:TOKEN
+        })
+        .then((response) => {
+            let data = response.data;
+            if(Number(data.rowsAffected[0])>0){
+                let coddoc = ''
+                data.recordset.map((r)=>{
+                    coddoc += `<option value="${r.CODDOC}">${r.CODDOC}</option>`
+                })        
+                container.innerHTML = coddoc;
+                get_correlativo(container.value)
+                .then((correlativo)=>{document.getElementById('txtCorrelativo').value = correlativo})
+                .catch((correlativo)=>{document.getElementById('txtCorrelativo').value = correlativo})  
+            }else{
+                container.innerHTML = '';
+            }                     
+        }, (error) => {
+            container.innerHTML = '';
+        });
+    };
+
+    let cmbCoddoc = document.getElementById('cmbCoddoc');
+    cmbCoddoc.addEventListener('change',()=>{
+        get_correlativo(cmbCoddoc.value)
+        .then((correlativo)=>{document.getElementById('txtCorrelativo').value = correlativo})
+        .catch((correlativo)=>{document.getElementById('txtCorrelativo').value = correlativo})
+    })
+
+    get_coddoc(cmbTipoDocumento.value);
+};
+
+function get_correlativo(coddoc){
+      
+    return new Promise((resolve,reject)=>{
+        axios.post('/tipodocumentos/correlativo',{
+            sucursal:GlobalEmpnit,
+            coddoc:coddoc,
+            token:TOKEN
+        })
+        .then((response) => {
+            let data = response.data;
+            if(Number(data.rowsAffected[0])>0){
+                let correlativo = '';
+                data.recordset.map((r)=>{
+                    correlativo = r.CORRELATIVO
+                })
+                resolve(correlativo);             
+            }else{
+                reject('0');
+            }                     
+        }, (error) => {
+            reject('0');
+        });
+    })
+
+};
+
+
 function listener_teclado(){
     //evitando errores
-    //Mousetrap.bind('f5', function(e) { e.preventDefault(); });
+    Mousetrap.bind('f5', function(e) { e.preventDefault(); });
     Mousetrap.bind('f7', function(e) { e.preventDefault(); });
+
     Mousetrap.bind('f10', function(e) { e.preventDefault(); });
     Mousetrap.bind('f11', function(e) { e.preventDefault(); });
     Mousetrap.bind('f12', function(e) { e.preventDefault(); });
@@ -566,7 +673,9 @@ function listener_teclado(){
 
     Mousetrap.bind('ctrl+right', function() { document.getElementById('btnPosCobro').click() });
     Mousetrap.bind('ctrl+left', function() { document.getElementById('btnPosDocumentoAtras').click() });
+    Mousetrap.bind('ctrl+g', function(e) { e.preventDefault(); document.getElementById('btnGuardarFactura').click() });
     
+
 
     Mousetrap.bind('f2', function() { 
         document.getElementById('txtPosCodprod').value='';
@@ -581,22 +690,29 @@ function listener_teclado(){
         document.getElementById('btnBuscarCliente').click();
 
     });
-    Mousetrap.bind('f8', function() { 
-        document.getElementById('btnPosCobro').click();
-        document.getElementById('btnGuardarPedido').click(); 
 
+    Mousetrap.bind('f7', function(e) {
+        e.preventDefault(); 
+        document.getElementById('btnCobrarFel').click();
     });
 
-    Mousetrap.bind('f9', function() { 
-        document.getElementById('btnPosCobro').click();
-        document.getElementById('btnGuardarCotizacion').click();
-       
+    Mousetrap.bind('f8', function(e) {
+        e.preventDefault(); 
+        document.getElementById('btnCobrarFactura').click();
+    });
+
+    Mousetrap.bind('f9', function(e) {
+        e.preventDefault(); 
+        document.getElementById('btnCobrarCotizacion').click(); 
     });
 
 
 };
 
 function listener_vista_pedido(){
+
+
+    document.getElementById('txtFechaDoc').value = funciones.getFecha();
 
 
     let txtPosCodprod = document.getElementById('txtPosCodprod');
@@ -609,12 +725,29 @@ function listener_vista_pedido(){
         if(filtro==''){return;}
 
         if (e.code === 'Enter') { 
-            get_buscar_producto(filtro);
-        };
-        if (e.keyCode === 13 && !e.shiftKey) {
-            get_buscar_producto(filtro);
+            document.getElementById('btnBuscarProd').click();
+            //get_buscar_producto(filtro);
         };
 
+        if (e.code === 13) { 
+            document.getElementById('btnBuscarProd').click();
+            //get_buscar_producto(filtro);
+        };
+
+        //if (e.keyCode === 13 && !e.shiftKey) {
+            //get_buscar_producto(filtro);
+        //};
+
+    });
+
+    document.getElementById('btnBuscarProd').addEventListener('click',()=>{
+        txtPosCodprod.value = txtPosCodprod.value.toUpperCase();
+        let filtro = txtPosCodprod.value || '';
+
+        if(filtro==''){return;}
+
+        get_buscar_producto(filtro);
+        
     });
     
 
@@ -625,6 +758,7 @@ function listener_vista_pedido(){
 
         let cantidad = Number(document.getElementById('txtMCCantidad').value || 1);
         let preciounitario = Number(document.getElementById('txtMCPrecio').value||0);
+        let descuento = Number(document.getElementById('txtMCDescuento').value||0);
 
         if(preciounitario==0){
             funciones.AvisoError('Precio inválido');
@@ -637,13 +771,16 @@ function listener_vista_pedido(){
         };
 
 
-        insert_producto_pedido(Selected_codprod,Selected_desprod,Selected_codmedida,Selected_equivale,Selected_costo,preciounitario,cantidad)
+        insert_producto_pedido(Selected_codprod,Selected_desprod,Selected_codmedida,Selected_equivale,Selected_costo,preciounitario,cantidad, Selected_exento, Selected_tipoprod, GlobalTipoPrecio, Selected_existencia,Selected_bono,descuento)
         .then(()=>{
             
             $("#modal_cantidad").modal('hide');
 
             funciones.showToast('Producto agregado ' + Selected_desprod);
             get_tbl_pedido();
+            
+            document.getElementById('txtPosCodprod').focus();
+
         })
         .catch(()=>{
             funciones.AvisoError('No se pudo agregar');
@@ -681,6 +818,7 @@ function listener_vista_pedido(){
 
         let cantidad = Number(document.getElementById('txtMCCantidadE').value || 1);
         let preciounitario = Number(document.getElementById('txtMCPrecioE').value||0);
+        let descuento =Number(document.getElementById('txtMCDescuentoE').value||0);
 
         if(preciounitario==0){
             funciones.AvisoError('Precio inválido');
@@ -694,12 +832,13 @@ function listener_vista_pedido(){
 
 
         let nuevacantidad = Number(cantidad);
-        selectDataRowVentaPOS(Number(Selected_id),nuevacantidad,preciounitario)
+        selectDataRowVentaPOS(Number(Selected_id),nuevacantidad,preciounitario,descuento)
         .then(()=>{
             $("#modal_editar_cantidad").modal('hide');
 
             funciones.showToast('Producto agregado ' + Selected_desprod);
             get_tbl_pedido();
+            document.getElementById('txtPosCodprod').focus();
         })
         .catch(()=>{
             funciones.AvisoError('No se pudo agregar');
@@ -731,6 +870,19 @@ function listener_vista_pedido(){
             document.getElementById('btnMCGuardarE').focus();
         };  
     });
+
+    document.getElementById('txtMCDescuentoE').addEventListener('keyup',(e)=>{
+        if (e.code === 'Enter') { 
+            document.getElementById('btnMCGuardarE').focus();
+        };
+        if (e.keyCode === 13 && !e.shiftKey) {
+            document.getElementById('btnMCGuardarE').focus();
+        };  
+    });
+
+
+
+   
     
 };
 
@@ -811,44 +963,61 @@ function listener_vista_cobro(){
     });
 
     document.getElementById('btnBuscarClie').addEventListener('click',(e)=>{  
-        tbl_clientes(document.getElementById('txtBuscarClie').value||'');
+        let filtro = document.getElementById('txtBuscarClie').value || '';
+        tbl_clientes(filtro);
     });
 
 
+    let btnNuevoCliente = document.getElementById('btnNuevoCliente');
+    btnNuevoCliente.addEventListener('click',()=>{
+
+            let nit = document.getElementById('txtPosCobroNit').value || 'CF';
+            let nombre = document.getElementById('txtPosCobroNombre').value || 'SN';
+            let direccion = document.getElementById('txtPosCobroDireccion').value || 'CIUDAD';
+            let telefono = document.getElementById('txtPosCobroTelefono').value || '';
+
+            if(nombre=='SN'){
+                funciones.AvisoError('Nombre de cliente no es válido');
+                return;
+            }
+
+            funciones.Confirmacion('¿Está seguro que desea crear este nuevo cliente?')
+            .then((value)=>{
+                if(value==true){
+                    btnNuevoCliente.disabled = true;
+                    btnNuevoCliente.innerHTML = get_button_loader('Creando cliente nuevo')
+
+                    insert_cliente(nit,nombre,direccion, telefono)
+                    .then((data)=>{
+
+                        let codcli = ''
+                        data.recordset.map((r)=>{
+                            codcli = r.Current_Identity.toString();
+                        })
+                        document.getElementById('txtPosCobroNitclie').value = codcli;
+
+                        funciones.Aviso('Cliente creado exitosamente!!');
+                        btnNuevoCliente.disabled = false;
+                        btnNuevoCliente.innerHTML = `<i class="fal fa-plus"></i> Crear Nuevo cliente`;
+                    })
+                    .catch(()=>{
+                        funciones.AvisoError('No se pudo crear el cliente nuevo');
+                        btnNuevoCliente.disabled = false;
+                        btnNuevoCliente.innerHTML = `<i class="fal fa-plus"></i> Crear Nuevo cliente`;
+                    })
+        
+                }
+            })
+   
 
 
-};
-
-function insert_new_cliente(nitclie,nit,nombre,direccion){
-
-    return new Promise((resolve,reject)=>{
-        axios.post('/clientes/clientes_nuevo',{
-            fecha:funciones.getFecha(),
-            codven: document.getElementById('cmbVendedor').value,
-            empnit: cmbEmpresa.value,
-            nitclie: nit,
-            nomclie: nombre,
-            dirclie: direccion,
-            coddepto: '011',
-            codmunicipio: '156',
-            telclie: '',
-            emailclie: 'SN',
-            lat: '0',
-            long: '0'
-        })
-        .then((response) => {
-            let data = response.data;
-            if(Number(data.rowsAffected[0])>0){
-                resolve(data);             
-            }else{
-                reject();
-            }                     
-        }, (error) => {
-            reject();
-        });
     })
 
+
+
 };
+
+
 
 function listener_listado_documentos(){
 
@@ -867,12 +1036,45 @@ function listener_listado_documentos(){
 
 };
 
-function initView(){
+function initView(){                                                                                                                                             
    
     getView();
     addListeners();
 
 };
+
+function get_vendedores(){
+    GF.get_data_empleados_tipo(3)
+    .then((data)=>{
+        let str = '';
+        data.recordset.map((r)=>{
+            str += `<option value="${r.CODEMPLEADO}">${r.NOMEMPLEADO}</option>`
+        });
+        document.getElementById('cmbVendedor').innerHTML = str;
+    })
+    .catch(()=>{
+        funciones.AvisoError('No se cargaron los vendedores');
+        document.getElementById('cmbVendedor').innerHTML ='<option value="1">SIN VENDEDOR</option>';
+    })
+};
+
+function get_cajas(){
+
+    GF.get_data_cajas()
+    .then((data)=>{
+        let str = '';
+        data.recordset.map((r)=>{
+            str += `<option value="${r.CODCAJA}">${r.DESCAJA}</option>`
+        });
+        document.getElementById('cmbCaja').innerHTML = str;
+    })
+    .catch(()=>{
+        funciones.AvisoError('No se cargaron las cajas');
+        document.getElementById('cmbCaja').innerHTML ='<option value="1">SIN CAJA</option>';
+    })
+
+};
+
 
 function tbl_clientes(filtro){
    
@@ -888,27 +1090,29 @@ function tbl_clientes(filtro){
 
     let str = '';
 
-    axios.post('/pos/buscar_cliente', {
-        sucursal: cmbEmpresa.value,
+    axios.post('/clientes/buscar_cliente', {
+        token:TOKEN,
+        sucursal: GlobalEmpnit,
         filtro:filtro
     })
     .then((response) => {        
-        if(response=='error'){
+        if(response.data=='error'){
             funciones.AvisoError('Error en la solicitud');
             container.innerHTML = 'No day datos....';
         }else{
             const data = response.data.recordset;
             data.map((r)=>{
                 str += `
-                <tr class="hand" onclick="get_datos_cliente('${r.NITCLIE}','${r.NIT}','${r.NOMCLIE}','${r.DIRCLIE}')">    
+                <tr class="hand" onclick="get_datos_cliente('${r.CODCLIENTE}','${r.NIT}','${r.NOMBRE}','${r.DIRECCION}','${r.TELEFONO}')">    
                     <td>
-                        ${r.NIT} / ${r.NITCLIE}
+                        ${r.NIT} / ${r.CODCLIENTE}
                     </td>
                     <td>
-                        ${r.NOMCLIE}
+                        ${r.NOMBRE}
                         <br>
-                        <small>${r.DIRCLIE}</small>
+                        <small>${r.DIRECCION}</small>
                     </td>
+                     <td>${r.TELEFONO}</td>
                     <td>${funciones.setMoneda(r.SALDO,'Q')}</td>
                 </tr>
                 `
@@ -924,6 +1128,36 @@ function tbl_clientes(filtro){
 
 };
 
+function insert_cliente(nit,nombre,direccion,telefono){
+
+    return new Promise((resolve,reject)=>{
+        axios.post('/clientes/insert_cliente',{
+            fecha:funciones.getFecha(),
+            sucursal: GlobalEmpnit,
+            nit: nit,
+            nombre: nombre,
+            direccion: direccion,
+            coddepto: '1',
+            codmunicipio: '1',
+            telefono: telefono,
+            email: 'SN',
+            lat: '0',
+            long: '0'
+        })
+        .then((response) => {
+            let data = response.data;
+            if(Number(data.rowsAffected[0])>0){
+                resolve(data);             
+            }else{
+                reject();
+            }                     
+        }, (error) => {
+            reject();
+        });
+    })
+
+};
+
 function fcn_buscar_cliente(nit){
    
     return new Promise((resolve, reject)=>{
@@ -934,7 +1168,7 @@ function fcn_buscar_cliente(nit){
         };
     
         axios.post('/pos/buscar_cliente_nit', {
-            sucursal: cmbEmpresa.value,
+            sucursal: GlobalEmpnit,
             nit:nit
         })
         .then((response) => {        
@@ -966,7 +1200,7 @@ function fcn_buscar_cliente(nit){
 
 };
 
-function get_datos_cliente(nitclie,nit,nomclie,dirclie){
+function get_datos_cliente(nitclie,nit,nomclie,dirclie,telefono){
 
     $("#modal_lista_clientes").modal('hide');
 
@@ -974,6 +1208,7 @@ function get_datos_cliente(nitclie,nit,nomclie,dirclie){
     document.getElementById('txtPosCobroNitclie').value = nitclie;
     document.getElementById('txtPosCobroNombre').value = nomclie;
     document.getElementById('txtPosCobroDireccion').value = dirclie;
+    document.getElementById('txtPosCobroTelefono').value = telefono;
     
 
 };
@@ -999,17 +1234,23 @@ function CalcularTotalPrecioEditar(){
 
 function get_buscar_producto(filtro){
 
-    let container = document.getElementById('tblPosProductosCategoria');
+    $("#modal_lista_precios").modal('show');
+
+    let container = document.getElementById('tblDataProductos');
     container.innerHTML = GlobalLoader;
+
+    document.getElementById('btnBuscarProd').innerHTML = '<i class="fal fa-sync fa-spin"></i>';
+    document.getElementById('btnBuscarProd').disabled=true;
 
     let str = '';
 
     let idf = 'first-element'; let i =0;
 
     axios.post('/pos/productos_filtro', {
-        sucursal: cmbEmpresa.value,
+        sucursal: GlobalEmpnit,
         token:TOKEN,
-        filtro:filtro
+        filtro:filtro,
+        tipoprecio:GlobalTipoPrecio
     })
     .then((response) => {        
         if(response=='error'){
@@ -1018,43 +1259,47 @@ function get_buscar_producto(filtro){
         }else{
             const data = response.data.recordset;
             data.map((r)=>{
-                if(Number(i)==0){}else{idf=""};
-                let strClassExist = 'text-success';
-                if(Number(r.EXISTENCIA)<0){strClassExist="text-danger"};
+                let strClassIps = '';
+                if(r.BONO.toString()=='0'){}else{}strClassIps = 'negrita text-primary'
+                let strClassExistencia = '';
+                let existencia = Number(r.EXISTENCIA);
+                if(existencia<=0){strClassExistencia='bg-danger text-white'};
+
                 str += `
-                <tr id="${idf}" class="hand border-secondary border-top-0 border-left-0 border-right-0 border-bottom-secondary" onclick="get_producto('${r.CODPROD}','${funciones.limpiarTexto(r.DESPROD)}','${r.CODMEDIDA}','${r.EQUIVALE}','${r.COSTO}','${r.PRECIO}')">
-                    <td>
-                        ${funciones.limpiarTexto(r.DESPROD)}
-                        <br>
-                        <small>Código: <b class="text-danger">${r.CODPROD}</b></small>
-                        <br>
-                        <small>Marca: <b class="text-secondary">${r.DESMARCA}</b></small>
-                    </td>
-                    <td>
-                        ${r.CODMEDIDA} 
-                        <br>
-                        <small>Equivale: <b class="text-danger">${r.EQUIVALE}</b></small>
-                    </td>
-                    <td>
-                        <b class="h4">${funciones.setMoneda(r.PRECIO ||0,'Q')}</b>
-                    </td>
-                    <td>
-                        <b class="${strClassExist}">${r.EXISTENCIA}</b>
-                    </td>
-                </tr>
+                    <tr class="hand" onclick="get_producto('${r.CODPROD}','${r.DESPROD}','${r.CODMEDIDA}','${r.EQUIVALE}','${r.COSTO}','${r.PRECIO}','${r.TIPOPROD}','${r.EXENTO}','${r.EXISTENCIA}','${r.BONO}')">
+                        <td>${r.DESMARCA}</td>
+                        <td><b style="color:${r.COLOR}">${r.DESPROD}</b>
+                            <br>
+                            <small class="negrita text-danger">Cód:${r.CODPROD}</small>
+                        </td>
+                        <td>${r.CODMEDIDA} (Eq:${r.EQUIVALE})</td>
+                        <td>${funciones.setMoneda(r.PRECIO,'Q')}</td>
+                        <td class="${strClassExistencia}">${r.EXISTENCIA}</td>
+                        <td class='${strClassIps}'>${funciones.setMoneda(r.BONO,'Q')}</td>
+                        <td>${r.TIPOPROD}</td>
+                    </tr>
                 `
             })
             container.innerHTML = str;
-            getMoveTable();
+            
+            document.getElementById('btnBuscarProd').innerHTML = '<i class="fal fa-search"></i>';
+            document.getElementById('btnBuscarProd').disabled=false;
+
+            //getMoveTable();
         }
     }, (error) => {
         funciones.AvisoError('Error en la solicitud');
         container.innerHTML = 'No day datos....';
+        document.getElementById('btnBuscarProd').innerHTML = '<i class="fal fa-search"></i>';
+        document.getElementById('btnBuscarProd').disabled=false;
     });
 
 
 
 };
+
+
+
 
 
 function getMoveTable(){
@@ -1117,9 +1362,6 @@ function getMoveTable(){
                 
                 console.log(start.onclick());
 
-
-                //get_producto(codprod,desprod,codmedida,equivale,costo,precio)
-                
             }
         };
 
@@ -1135,7 +1377,7 @@ function get_tbl_productos_clasificacion(codigo){
     let str = '';
 
     axios.post('/pos/productos_categoria', {
-        sucursal: cmbEmpresa.value,
+        sucursal: GlobalEmpnit,
         codigo:codigo
     })
     .then((response) => {        
@@ -1173,35 +1415,101 @@ function get_tbl_productos_clasificacion(codigo){
 
 };
 
-function get_producto(codprod,desprod,codmedida,equivale,costo,precio){
 
-    $("#modal_cantidad").modal('show');
+function get_producto(codprod,desprod,codmedida,equivale,costo,precio,tipoprod,exento,existencia,bono){
 
-    
-    Selected_codprod = codprod;
-    Selected_desprod = desprod;
-    Selected_codmedida = codmedida;
-    Selected_equivale = Number(equivale);
-    Selected_costo = Number(costo);
-    Selected_precio = Number(precio);
+            $("#modal_lista_precios").modal('hide');
+            
+            $("#modal_cantidad").modal('show');
+ 
+   
+            let container = document.getElementById('container_precio');
+            container.innerHTML = GlobalLoader;
 
-    document.getElementById('lbCantidadDesprod').innerText = `${desprod} (${codmedida} - Eq: ${equivale})`;
+            document.getElementById('txtMCCantidad').value = '';
+            document.getElementById('txtMCPrecio').value = 0;
+            document.getElementById('btnMCGuardar').disabled = true;
 
-    document.getElementById('txtMCCantidad').value = '';
-    document.getElementById('txtMCPrecio').value = precio;
 
-    CalcularTotalPrecio();
+            CalcularTotalPrecio();
 
-    document.getElementById('txtMCCantidad').focus();
-    
+            Selected_codprod = codprod;
+            Selected_desprod = desprod;
+            Selected_codmedida = codmedida;
+            Selected_equivale = Number(equivale);
+            Selected_costo = Number(costo);
+            Selected_precio = Number(precio);
+            Selected_tipoprod = tipoprod;
+            Selected_exento = Number(exento);
+            Selected_existencia = Number(existencia);
+            Selected_bono = Number(bono);
+
+            document.getElementById('lbCantidadDesprod').innerText = `${desprod} (${codmedida} - Eq: ${equivale})`;
+
+            document.getElementById('txtMCCantidad').value = '';
+            document.getElementById('txtMCPrecio').value = precio;
+            //document.getElementById('txtMCBono').value = precio;
+
+            CalcularTotalPrecio();
+
+            document.getElementById('txtPosCodprod').value = '';
+
+            
+            container.innerHTML = '';
+
+            document.getElementById('btnMCGuardar').disabled = false;
+
+            document.getElementById('txtMCCantidad').focus();
+   
+
 };
 
-function insert_producto_pedido(codprod,desprod,codmedida,equivale,costo,precio,cantidad){
+function get_datos_precio(codprod,codmedida){
+
+    return new Promise((resolve,reject)=>{
+
+        axios.post('/pos/productos_precio', {
+            sucursal: GlobalEmpnit,
+            token:TOKEN,
+            codprod:codprod,
+            codmedida:codmedida
+        })
+        .then((response) => {
+            if(response=='error'){
+                funciones.AvisoError('Error en la solicitud');
+            }else{
+                const data = response.data;
+                resolve(data);
+            }
+        }, (error) => {
+            funciones.AvisoError('Error en la solicitud');
+        });
+
+    })
+
+};
+
+
+function calcular_descuento(idDescuento,idTotalPrecio,idTotalPrecioDescuento){
+
+    try {
+        let descuento = Number(document.getElementById(idDescuento).value || 0) ;
+        let totalprecio = Number(document.getElementById(idTotalPrecio).value || 0);
+        document.getElementById(idTotalPrecioDescuento).value = (totalprecio - descuento) 
+
+    } catch (error) {
+        document.getElementById(idTotalPrecioDescuento).value = totalprecio;
+    }
+
+};
+
+
+function insert_producto_pedido(codprod,desprod,codmedida,equivale,costo,precio,cantidad,exento,tipoprod,tipoprecio,existencia,bono,descuento){
     
     let datos = 
         {
-            CODSUCURSAL:cmbEmpresa.value.toString(),
-            EMPNIT:cmbEmpresa.value.toString(),
+            CODSUCURSAL:GlobalEmpnit.toString(),
+            EMPNIT:GlobalEmpnit.toString(),
             USUARIO:'',
             CODPROD:codprod.toString(),
             DESPROD:desprod.toString(),
@@ -1212,7 +1520,13 @@ function insert_producto_pedido(codprod,desprod,codmedida,equivale,costo,precio,
             PRECIO:Number(precio),
             CANTIDAD:Number(cantidad),
             TOTALUNIDADES:Number(cantidad * equivale),
-            TOTALPRECIO:Number(precio)*Number(cantidad)
+            TOTALPRECIO:Number(precio)*Number(cantidad),
+            EXENTO:Number(exento),
+            TIPOPROD:tipoprod,
+            TIPOPRECIO:tipoprecio,
+            EXISTENCIA:Number(existencia),
+            BONO:Number(bono),
+            DESCUENTO:Number(descuento)
         };
 
     
@@ -1238,13 +1552,15 @@ function get_tbl_pedido(){
     let varTotalItems = 0;
     let varTotalVenta = 0;
     let varTotalCosto = 0;
+    let varTotalDescuento = 0;
 
-    selectTempVentasPOS(cmbEmpresa.value)
+    selectTempVentasPOS(GlobalEmpnit)
     .then((data)=>{
         let datos = data.map((rows)=>{
             varTotalItems += 1;
             varTotalVenta = varTotalVenta + Number(rows.TOTALPRECIO);
             varTotalCosto = varTotalCosto + Number(rows.TOTALCOSTO);
+            varTotalDescuento += Number(rows.DESCUENTO);
             return `
             <tr class="border-primary border-left-0 border-right-0 border-top-0">
                 <td class="text-left">
@@ -1257,13 +1573,18 @@ function get_tbl_pedido(){
                     </div>
                 </td>
                 <td>
+                    ${rows.CODMEDIDA} (eq: ${rows.EQUIVALE})
+                </td>
+                <td>
                     <b class="text-info" style="font-size:140%">${rows.CANTIDAD}</b>
-                    <br><small>${rows.CODMEDIDA} (eq: ${rows.EQUIVALE})</small>
                 </td>
                 <td class="negrita">${funciones.setMoneda(rows.PRECIO,'Q')}</td>
-                <td class="negrita text-danger h4">${funciones.setMoneda(rows.TOTALPRECIO,'Q')}</td>
+                <td class="negrita h4">${funciones.setMoneda(rows.TOTALPRECIO,'Q')}</td>
+                <td class="negrita text-danger">${funciones.setMoneda(rows.DESCUENTO,'Q')}</td>
+                <td class="negrita text-secondary h4">${funciones.setMoneda((Number(rows.TOTALPRECIO)-Number(rows.DESCUENTO)),'Q')}</td>
+
                 <td>
-                    <button class="btn btn-md btn-circle btn-info shadow hand" onclick="edit_item_pedido('${rows.ID}','${rows.CODPROD}','${rows.DESPROD}','${rows.CODMEDIDA}','${rows.EQUIVALE}','${rows.CANTIDAD}','${rows.COSTO}','${rows.PRECIO}')">
+                    <button class="btn btn-md btn-circle btn-info shadow hand" onclick="edit_item_pedido('${rows.ID}','${rows.CODPROD}','${rows.DESPROD}','${rows.CODMEDIDA}','${rows.EQUIVALE}','${rows.CANTIDAD}','${rows.COSTO}','${rows.PRECIO}','${rows.TIPOPROD}','${rows.EXENTO}','${rows.EXISTENCIA}','${rows.BONO}','${rows.DESCUENTO}')">
                         <i class="fal fa-edit"></i>
                     </button>
                 </td> 
@@ -1275,23 +1596,37 @@ function get_tbl_pedido(){
             </tr>`
        }).join('\n');
         container.innerHTML = datos;
+
         GlobalTotalCostoDocumento = varTotalCosto;
         GlobalTotalDocumento = varTotalVenta;
+        GlobalTotalDescuento = varTotalDescuento;
+
         document.getElementById('lbTotalItems').innerText = varTotalItems.toString() + ' items';
         document.getElementById('lbTotalVenta').innerText = funciones.setMoneda(varTotalVenta,'Q');
-        document.getElementById('lbPosCobroTotalPagar').innerText = funciones.setMoneda(varTotalVenta,'Q');
+        document.getElementById('lbTotalDescuento').innerText = `- ${funciones.setMoneda(varTotalDescuento,'Q')}` ;
+        document.getElementById('lbTotalVentaDescuento').innerText = funciones.setMoneda((varTotalVenta-varTotalDescuento),'Q');
+        
+        document.getElementById('lbPosCobroTotalPagar').innerText = funciones.setMoneda((varTotalVenta-varTotalDescuento),'Q');
     })
     .catch((error)=>{
-        console.log('error cargar grid:')
+        
         console.log(error)
         container.innerHTML = 'No hay datos...';
         GlobalTotalCostoDocumento = 0;
         GlobalTotalDocumento = 0;
+        GlobalTotalDescuento = 0;
+
+        document.getElementById('lbTotalItems').innerText = '---';
+        document.getElementById('lbTotalVenta').innerText = 
+        document.getElementById('lbTotalDescuento').innerText = '---';
+        document.getElementById('lbTotalVentaDescuento').innerText = '---';
+        document.getElementById('lbPosCobroTotalPagar').innerText = '---';
     })
+
 
 };
 
-function edit_item_pedido(id,codprod,desprod,codmedida,equivale,cantidad,costo,precio){
+function edit_item_pedido(id,codprod,desprod,codmedida,equivale,cantidad,costo,precio,tipoprod,exento,existencia,bono,descuento){
 
     $("#modal_editar_cantidad").modal('show');
 
@@ -1302,11 +1637,16 @@ function edit_item_pedido(id,codprod,desprod,codmedida,equivale,cantidad,costo,p
     Selected_equivale = Number(equivale);
     Selected_costo = Number(costo);
     Selected_precio = Number(precio);
+    Selected_tipoprod = tipoprod;
+    Selected_exento = Number(exento);
+    Selected_existencia = Number(existencia);
+    Selected_bono = Number(bono)
 
     document.getElementById('lbCantidadDesprodE').innerText = `${desprod} (${codmedida} - Eq: ${equivale})`;
 
     document.getElementById('txtMCCantidadE').value = cantidad;
     document.getElementById('txtMCPrecioE').value = precio;
+    document.getElementById('txtMCDescuentoE').value = descuento;
 
     CalcularTotalPrecioEditar();
 
@@ -1334,7 +1674,7 @@ function delete_item_pedido(id){
 function get_coddoc(tipo){
     return new Promise((resolve, reject)=>{
         axios.post('/tipodocumentos/series_doc', {
-            sucursal: cmbEmpresa.value,
+            sucursal: GlobalEmpnit,
             tipo:tipo
         })
         .then((response) => {
@@ -1353,7 +1693,7 @@ function get_coddoc(tipo){
 function get_correlativo_coddoc(coddoc){
     return new Promise((resolve, reject)=>{
         axios.post('/tipodocumentos/correlativo_doc', {
-            sucursal: cmbEmpresa.value,
+            sucursal: GlobalEmpnit,
             coddoc:coddoc
         })
         .then((response) => {
@@ -1373,250 +1713,167 @@ function get_correlativo_coddoc(coddoc){
     })
 };
 
-function get_vendedores(){
+
+
+function finalizar_pedido(){
+
     
-        return new Promise((resolve, reject) => {
-            axios.post('/empleados/vendedores', {sucursal:cmbEmpresa.value})
-            .then((response) => {
-                const data = response.data;        
-                
-               resolve(data); 
-            }, (error) => {
-                reject();
-            });
-        })
-        
-};
+    let codcliente = document.getElementById('txtPosCobroNitclie').value || ''; //GlobalSelectedCodCliente;
+    if(codcliente==''){
+        funciones.AvisoError('Seleccione un cliente');
+        return;
+    };
 
-function finalizar_pedido(tipo){
+    let nit = document.getElementById('txtPosCobroNit').value || 'CF';
+    let ClienteNombre = document.getElementById('txtPosCobroNombre').value;
+    GlobalSelectedNomCliente = ClienteNombre;
+    let dirclie = document.getElementById('txtPosCobroDireccion').value;
+    GlobalSelectedDirCliente = dirclie;
+    let obs = 'SN';  
+    let direntrega = "SN"; 
+    let codbodega = GlobalCodBodega;
+    let cmbTipoEntrega = ''; 
+    
+    let txtFecha = new Date(document.getElementById('txtFecha').value);
+    let anio = txtFecha.getFullYear();
+    let mes = txtFecha.getUTCMonth()+1;
+    let dia = txtFecha.getUTCDate() 
+    let fecha = funciones.devuelveFecha('txtFecha'); //funciones.getFecha() //anio + '-' + mes + '-' + d; 
+    
+    let hora = funciones.getHora();
 
-            let codcliente = document.getElementById('txtPosCobroNitclie').value || ''; //GlobalSelectedCodCliente;
-            if(codcliente==''){
-                funciones.AvisoError('Seleccione un cliente');
-                return;
-            }
+    let coddoc = document.getElementById('cmbCoddoc').value;
+    let correlativoDoc = document.getElementById('txtCorrelativo').value;
 
-            let nit = document.getElementById('txtPosCobroNit').value || 'CF';
-            let ClienteNombre = document.getElementById('txtPosCobroNombre').value;
-            GlobalSelectedNomCliente = ClienteNombre;
-            let dirclie = document.getElementById('txtPosCobroDireccion').value; // CAMPO DIR_ENTREGA
-            GlobalSelectedDirCliente = dirclie;
-            let obs = 'SN'; //document.getElementById('cmbEntregaTipoDoc').value; 
-            let direntrega = "SN"; //document.getElementById('txtEntregaDireccion').value; //CAMPO MATSOLI
-            let codbodega = GlobalCodBodega;
-            let cmbTipoEntrega = ''; //document.getElementById('cmbEntregaConcre').value; //campo TRANSPORTE
-            
-            let txtFecha = new Date(document.getElementById('txtFecha').value);
-            let anio = txtFecha.getFullYear();
-            let mes = txtFecha.getUTCMonth()+1;
-            let d = txtFecha.getUTCDate() 
-            let fecha = anio + '-' + mes + '-' + d; // CAMPO DOC_FECHA
-            let dia = d;
+    let cmbCaja = document.getElementById('cmbCaja');
+    let cmbVendedor = document.getElementById('cmbVendedor');
 
-            let hora = funciones.getHora();
-        
-            let fe = txtFecha;// new Date(document.getElementById('txtEntregaFecha').value);
-            let ae = fe.getFullYear();
-            let me = fe.getUTCMonth()+1;
-            let de = fe.getUTCDate() 
-            let fechaentrega = ae + '-' + me + '-' + de;  // CAMPO DOC_FECHAENT
+    let latdoc = '0';
+    let longdoc = '0';
 
-            let coddoc = ''; let correlativoDoc = '';
-            if(tipo=='PED'){
-                coddoc = document.getElementById('cmbCoddoc').value;
-                correlativoDoc = document.getElementById('txtCorrelativo').value;
-            };
-            if(tipo=='COT'){
-                coddoc = document.getElementById('cmbCoddocCot').value;
-                correlativoDoc = document.getElementById('txtCorrelativoCot').value;
-            };
-            
-            let cmbVendedor = document.getElementById('cmbVendedor');
+    let tipo_pago = 'CON'; 
+    let tipo_doc = '';
+    
+    let var_mostrador = document.getElementById('inlineRadio1').checked.toString();
+    let var_domicilio = document.getElementById('inlineRadio2').checked.toString();
+    let var_callcenter = document.getElementById('inlineRadio3').checked.toString();
+    if(var_mostrador=="true"){tipo_doc='MOSTRADOR'};
+    if(var_domicilio=="true"){tipo_doc='DOMICILIO'};
+    if(var_callcenter=="true"){tipo_doc='CALLCENTER'};
 
-            let latdoc = '0';
-            let longdoc = '0';
 
-            let tipo_pago = 'CON'; 
-            let tipo_doc = '';
-            let entrega_contacto = document.getElementById('txtPosCobroNombre').value;
-            let entrega_telefono = ''; //document.getElementById('txtEntregaTelefono').value;
-            let entrega_direccion = ''; //document.getElementById('txtEntregaDireccion').value;
-            let entrega_referencia = ''; //document.getElementById('txtEntregaReferencia').value;
-            let entrega_lat = '0';
-            let entrega_long = '0';
-            
-            get_tbl_pedido();
+    let entrega_contacto = ClienteNombre;
+    let entrega_telefono = ''; 
+    let entrega_direccion = ''; 
+    let entrega_referencia = ''; 
+    let entrega_lat = '0';
+    let entrega_long = '0';
+
+    let btnGuardarFactura = document.getElementById('btnGuardarFactura');
+    
+    get_tbl_pedido();
 
         //VERIFICACIONES
-        if(Number(GlobalTotalDocumento)==0){funciones.AvisoError('No hay productos agregados');return;}
-         
+    if(Number(GlobalTotalDocumento)==0){funciones.AvisoError('No hay productos agregados');return;}
+    
+    btnGuardarFactura.disabled = true;
+    btnGuardarFactura.innerHTML = `<i class="fal fa-save fa-spin"></i>`;
 
-        //BLOQUEANDO EL BOTÓN
-        if(tipo=='PED'){
-            document.getElementById('btnGuardarPedido').innerHTML = '<i class="fal fa-save mr-1 fa-spin"></i>';
-            document.getElementById('btnGuardarPedido').disabled = true;      
-        };
-        if(tipo=='COT'){
-            document.getElementById('btnGuardarCotizacion').innerHTML = '<i class="fal fa-save mr-1 fa-spin"></i>';
-            document.getElementById('btnGuardarCotizacion').disabled = true;
-        };
-        //BLOQUEANDO EL BOTÓN
-        
-            classTipoDocumentos.getCorrelativoDocumento(tipo,coddoc)
-                .then((correlativo)=>{
-                    correlativoDoc = correlativo;
-
-                    funciones.Confirmacion('¿Está seguro que desea Crear este Documento?')
-                    .then((value)=>{
-                        if(value==true){    
-                            gettempDocproductos_pos(GlobalUsuario)
-                            .then((response)=>{
-                                axios.post('/pos/insertventa', {
-                                    jsondocproductos:JSON.stringify(response),
-                                    codsucursal:cmbEmpresa.value,
-                                    empnit: GlobalEmpnit,
-                                    coddoc:coddoc,
-                                    correl: correlativoDoc,
-                                    anio:anio,
-                                    mes:mes,
-                                    dia:dia,
-                                    fecha:fecha,
-                                    fechaentrega:fechaentrega,
-                                    formaentrega:cmbTipoEntrega,
-                                    codbodega:codbodega,
-                                    codcliente: codcliente,
-                                    nomclie:ClienteNombre,
-                                    totalcosto:GlobalTotalCostoDocumento,
-                                    totalprecio:GlobalTotalDocumento,
-                                    nitclie:nit,
-                                    dirclie:dirclie,
-                                    obs:entrega_referencia,
-                                    direntrega:direntrega,
-                                    usuario:GlobalUsuario,
-                                    codven:cmbVendedor.value,
-                                    lat:latdoc,
-                                    long:longdoc,
-                                    hora:hora,
-                                    tipo_pago:tipo_pago,
-                                    tipo_doc:tipo_doc,
-                                    entrega_contacto:entrega_contacto,
-                                    entrega_telefono:entrega_telefono,
-                                    entrega_direccion:entrega_direccion,
-                                    entrega_referencia:entrega_referencia,
-                                    entrega_lat:entrega_lat,
-                                    entrega_long:entrega_long,
-                                    domicilio:GlobalSelectedDomicilio
-                                })
-                                .then(async(response) => {
-                                    const data = response.data;
-                                    console.log(response);
-                                    if (data=='error'){
-
-                                            funciones.AvisoError('No se pudo guardar');
-                                            //DESBLOQUEANDO EL BOTÓN
-                                            if(tipo=='PED'){
-                                                document.getElementById('btnGuardarPedido').innerHTML = '<i class="fal fa-save mr-1"></i> Crear Pedido (f8)';
-                                                document.getElementById('btnGuardarPedido').disabled = false;      
-                                            };
-                                            if(tipo=='COT'){
-                                                document.getElementById('btnGuardarCotizacion').innerHTML = '<i class="fal fa-save mr-1"></i> Crear Cotización (f9)';
-                                                document.getElementById('btnGuardarCotizacion').disabled = false;
-                                            };
-                                            //DESBLOQUEANDO EL BOTÓN
-                                    }else{
-                                            //DESBLOQUEANDO EL BOTÓN
-                                            if(tipo=='PED'){
-                                                document.getElementById('btnGuardarPedido').innerHTML = '<i class="fal fa-save mr-1"></i> Crear Pedido (f8)';
-                                                document.getElementById('btnGuardarPedido').disabled = false;
-                                                socket.emit('nuevo_pedido',`Nuevo pedido a nombre de ${ClienteNombre} por monto de ${funciones.setMoneda(GlobalTotalDocumento,'Q')}`);      
-                                            };
-                                            if(tipo=='COT'){
-                                                document.getElementById('btnGuardarCotizacion').innerHTML = '<i class="fal fa-save mr-1"></i> Crear Cotización (f9)';
-                                                document.getElementById('btnGuardarCotizacion').disabled = false;
-                                            };
-                                            //DESBLOQUEANDO EL BOTÓN
-                                        
-
-                                            funciones.Aviso('Generado Exitosamente !!!')
-                                       
-                                            deleteTempVenta_pos(GlobalUsuario);
-
-                                            fcnNuevoPedido();
-                                    }
-                                }, (error) => {
-                                    console.log(error);
-                                    funciones.AvisoError('No se pudo guardar');
-                                    //DESBLOQUEANDO EL BOTÓN
-                                    if(tipo=='PED'){
-                                        document.getElementById('btnGuardarPedido').innerHTML = '<i class="fal fa-save mr-1"></i> Crear Pedido (f8)';
-                                        document.getElementById('btnGuardarPedido').disabled = false;      
-                                    };
-                                    if(tipo=='COT'){
-                                        document.getElementById('btnGuardarCotizacion').innerHTML = '<i class="fal fa-save mr-1"></i> Crear Cotización (f9)';
-                                        document.getElementById('btnGuardarCotizacion').disabled = false;
-                                    };
-                                    //DESBLOQUEANDO EL BOTÓN    
-                                });        
-
-                            })
-                            .catch((error)=>{
-                                    funciones.AvisoError('No se pudo guardar');
-                                    //DESBLOQUEANDO EL BOTÓN
-                                    if(tipo=='PED'){
-                                        document.getElementById('btnGuardarPedido').innerHTML = '<i class="fal fa-save mr-1"></i> Crear Pedido (f8)';
-                                        document.getElementById('btnGuardarPedido').disabled = false;      
-                                    };
-                                    if(tipo=='COT'){
-                                        document.getElementById('btnGuardarCotizacion').innerHTML = '<i class="fal fa-save mr-1"></i> Crear Cotización (f9)';
-                                        document.getElementById('btnGuardarCotizacion').disabled = false;
-                                    };
-                                    //DESBLOQUEANDO EL BOTÓN    
-                            })
-                        }else{
-                            //DESBLOQUEANDO EL BOTÓN
-                            if(tipo=='PED'){
-                                document.getElementById('btnGuardarPedido').innerHTML = '<i class="fal fa-save mr-1"></i> Crear Pedido (f8)';
-                                document.getElementById('btnGuardarPedido').disabled = false;      
-                            };
-                            if(tipo=='COT'){
-                                document.getElementById('btnGuardarCotizacion').innerHTML = '<i class="fal fa-save mr-1"></i> Crear Cotización (f9)';
-                                document.getElementById('btnGuardarCotizacion').disabled = false;
-                            };
-                            //DESBLOQUEANDO EL BOTÓN            
-                        }
-                    })
-
-                })
-                .catch(()=>{
+        gettempDocproductos_pos(GlobalUsuario)
+        .then((response)=>{
+            axios.post('/pos/insertventa', {
+                jsondocproductos:JSON.stringify(response),
+                sucursal:GlobalEmpnit,
+                coddoc:coddoc,
+                correlativo: correlativoDoc,
+                anio:anio,
+                mes:mes,
+                fecha:fecha,
+                fechaentrega:fecha,
+                formaentrega:cmbTipoEntrega,
+                codbodega:codbodega,
+                codcaja:cmbCaja.value,
+                codcliente: codcliente, //x
+                nomclie:ClienteNombre,
+                totalcosto:GlobalTotalCostoDocumento,
+                totalprecio:GlobalTotalDocumento,
+                totaldescuento:GlobalTotalDescuento,
+                nitclie:nit,
+                dirclie:dirclie,
+                obs:entrega_referencia,
+                direntrega:direntrega,
+                usuario:GlobalUsuario,
+                codven:cmbVendedor.value,
+                lat:latdoc,
+                long:longdoc,
+                hora:hora,
+                tipo_pago:tipo_pago,
+                tipo_doc:tipo_doc,
+                entrega_contacto:entrega_contacto,
+                entrega_telefono:entrega_telefono,
+                entrega_direccion:entrega_direccion,
+                entrega_referencia:entrega_referencia,
+                entrega_lat:entrega_lat,
+                entrega_long:entrega_long,
+                iva:GlobalConfigIVA
+            })
+            .then((response) => {
+                const data = response.data;
+                if (data=='error'){
                     funciones.AvisoError('No se pudo guardar');
-                    //DESBLOQUEANDO EL BOTÓN
-                    if(tipo=='PED'){
-                        document.getElementById('btnGuardarPedido').innerHTML = '<i class="fal fa-save mr-1"></i> Crear Pedido (f8)';
-                        document.getElementById('btnGuardarPedido').disabled = false;      
-                    };
-                    if(tipo=='COT'){
-                        document.getElementById('btnGuardarCotizacion').innerHTML = '<i class="fal fa-save mr-1"></i> Crear Cotización (f9)';
-                        document.getElementById('btnGuardarCotizacion').disabled = false;
-                    };
-                    //DESBLOQUEANDO EL BOTÓN
-                })
+                    btnGuardarFactura.disabled = false;
+                    btnGuardarFactura.innerHTML = `<i class="fal fa-save"></i>`;
+                }else{
+                    funciones.Aviso('Generado Exitosamente !!!')
+                    btnGuardarFactura.disabled = false;
+                    btnGuardarFactura.innerHTML = `<i class="fal fa-save"></i>`;
 
+                    deleteTempVenta_pos(GlobalUsuario);
 
+                    fcnNuevoPedido();
+                }
+            }, (error) => {
+                console.log(error);
+                funciones.AvisoError('No se pudo guardar');
+                btnGuardarFactura.disabled = false;
+                btnGuardarFactura.innerHTML = `<i class="fal fa-save"></i>`;
+            });        
+        })
+        .catch((error)=>{
+            console.log(error);
+            funciones.AvisoError('No se pudo guardar');
+            btnGuardarFactura.disabled = false;
+            btnGuardarFactura.innerHTML = `<i class="fal fa-save"></i>`;
+        })
+
+            
 };
 
 
 
 function fcnNuevoPedido(){
   
-    
+        GlobalTotalDocumento =0;
+        GlobalTotalDescuento =0;
+        GlobalTotalCostoDocumento=0;
+        
+        
+        document.getElementById('inlineRadio1').checked = true;
+
         document.getElementById('txtPosCobroNit').value = 'CF';
-        document.getElementById('txtPosCobroNitclie').value = 'CF';
+        document.getElementById('txtPosCobroNitclie').value = 0;
         document.getElementById('txtPosCobroNombre').value = 'CONSUMIDOR FINAL';
         document.getElementById('txtPosCobroDireccion').value = 'CIUDAD';
        
         document.getElementById('btnPosDocumentoAtras').click();
-        get_tbl_pedido();    
+        get_tbl_pedido();
+
+        let cmbCoddoc = document.getElementById('cmbCoddoc');
+        get_correlativo(cmbCoddoc.value)
+        .then((correlativo)=>{document.getElementById('txtCorrelativo').value = correlativo})
+        .catch((correlativo)=>{document.getElementById('txtCorrelativo').value = correlativo})
     
+
 };
 
 
@@ -1632,19 +1889,19 @@ function tbl_lista_documentos(){
     container.innerHTML = GlobalLoader;
     
 
-    let coddoc = '';
-    if(tipo=='PED'){
-        coddoc = document.getElementById('cmbCoddoc').value;
-    }else{
-        coddoc = document.getElementById('cmbCoddocCot').value;
-    }
+    let coddoc = document.getElementById('cmbCoddoc').value;
+  
    
-    let tableheader = `<table class="table table-responsive table-hover table-striped table-bordered">
+    let tableheader = `<table class="table table-responsive table-hover table-striped table-bordered h-full">
                         <thead class="bg-primary text-white">
                             <tr>
-                                <td>Documento</td>
-                                <td>Cliente</td>
-                                <td>Importe</td>
+                                <td>HORA</td>
+                                <td>DOCUMENTO</td>
+                                <td>CLIENTE</td>
+                                <td>IMPORTE</td>
+                                <td>ST</td>
+                                <td>CERTIFICACION</td>
+                                <td></td>
                                 <td></td>
                             </tr>
                         </thead>
@@ -1654,8 +1911,8 @@ function tbl_lista_documentos(){
     let strdata = '';
     let totalpedidos = 0;
     
-    axios.post('/pos/lista_documentos_tipo', {
-        sucursal: cmbEmpresa.value,
+    axios.post('/pos/lista_documentos', {
+        sucursal: GlobalEmpnit,
         tipo:tipo,
         fecha:fecha,
         coddoc:coddoc   
@@ -1664,40 +1921,29 @@ function tbl_lista_documentos(){
         const data = response.data.recordset;
         let total =0;
         data.map((rows)=>{
-                let idBtn = `btnEliminar${rows.CODDOC + '-' + rows.CORRELATIVO}`;
+                let strClassAnulado = ''; if(rows.ST.toString()=='A'){strClassAnulado='text-danger'};
                 let idBtnDownload = `btnDownload${rows.CODDOC + '-' + rows.CORRELATIVO}`
-                total = total + Number(rows.IMPORTE);
+                let idBtnAnular = `btnAnular${rows.CODDOC + '-' + rows.CORRELATIVO}`
+                total = total + Number(rows.TOTALPRECIO);
                 totalpedidos = totalpedidos + 1;
-                strdata = strdata + `<tr>
+                strdata = strdata + `
+                        <tr>
+                            <td>${rows.HORA}</td>
                             <td>
                                 <b class="text-danger">${rows.CODDOC + '-' + rows.CORRELATIVO}</b>
                             </td>
+                            <td>${rows.NOMCLIE}</td>
+                            <td class="${strClassAnulado}"><b>${funciones.setMoneda(rows.TOTALPRECIO,'Q')}</b></td>
+                            <td class="negrita ${strClassAnulado}">${rows.ST}</td>
+                            <td>${rows.FEL_UUDI}</td>
                             <td>
-                                    ${rows.NOMCLIE}
-                                <br>
-                                    <small class="text-secondary">${rows.DIRCLIE + ', ' + rows.DESMUNI}</small>
-                                
-                                <div class="row">
-                                    <div class="col-6">
-                                        <button class="btn btn-outline-info btn-sm"
-                                            onclick="cargarPedidoEdicion('${rows.CODCLIE}','${rows.NIT}','${rows.NOMCLIE}','${rows.DIRCLIE}','${rows.CODDOC}','${rows.CORRELATIVO}')">
-                                            <i class="fal fa-edit"></i> Editar
-                                        </button>    
-                                    </div>
-                                    <div class="col-6">
-                                        <button class="btn btn-outline-danger btn-sm" id='${idBtn}'
-                                            onclick="fcn_delete_pedido('${rows.CODDOC}','${rows.CORRELATIVO}','${rows.ST}','${idBtn}');">
-                                            <i class="fal fa-trash"></i> Eliminar
-                                        </button>    
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <b>${funciones.setMoneda(rows.IMPORTE,'Q')}</b>
-                            </td>
-                            <td>
-                                <button class="btn btn-circle btn-primary btn-md hand shadow" id="${idBtnDownload}" onclick="get_pdf('${rows.NIT}','${funciones.limpiarTexto(rows.NOMCLIE)}','${funciones.limpiarTexto(rows.DIRCLIE)}','${rows.CODDOC}','${rows.CORRELATIVO}','${idBtnDownload}')">
+                                <button class="btn btn-circle btn-info btn-md hand shadow" id="${idBtnDownload}" onclick="get_pdf('${rows.CODDOC}','${rows.CORRELATIVO}','${idBtnDownload}')">
                                     <i class="fal fa-download"></i>
+                                </button>
+                            </td>
+                            <td>
+                                <button class="btn btn-circle btn-danger btn-md hand shadow" id="${idBtnAnular}" onclick="anular_factura('${rows.CODDOC}','${rows.CORRELATIVO}','${rows.ST}','${idBtnAnular}')">
+                                    <i class="fal fa-sync"></i>
                                 </button>
                             </td>
                         </tr>`
@@ -1713,22 +1959,17 @@ function tbl_lista_documentos(){
 
 };
 
-function get_pdf(nit,cliente,direccion,coddoc, correlativo, idbtn){
+function get_pdf(coddoc, correlativo, idbtn){
 
     let btn = document.getElementById(idbtn);
-    let tipo = document.getElementById('cmbTipoDoc').value;
     
     btn.innerHTML = '<i class="fal fa-download fa-spin"></i>';
     btn.disabled = true;
 
     axios.post('/pdf',{
-        sucursal:cmbEmpresa.value,
+        sucursal:GlobalEmpnit,
         coddoc:coddoc,
-        correlativo:correlativo,
-        nit:nit,
-        cliente:cliente,
-        direccion:direccion,
-        tipodoc:tipo
+        correlativo:correlativo
      })
      .then((response) => {
         let base = response.data;
@@ -1815,7 +2056,7 @@ function loadDetallePedido(coddoc,correlativo){
     
     return new Promise((resolve,reject)=>{
         axios.post('/ventas/loadpedido_edicion', {
-            sucursal:cmbEmpresa.value,
+            sucursal:GlobalEmpnit,
             coddoc: coddoc,
             correlativo: correlativo,
             usuario:GlobalUsuario
@@ -1836,92 +2077,35 @@ function loadDetallePedido(coddoc,correlativo){
     
 };
 
-function anular_pedido(coddoc,correlativo){
-    return new Promise((resolve,reject)=>{
-        axios.post('/ventas/anular_pedido', {
-            sucursal:cmbEmpresa.value,
-            coddoc: coddoc,
-            correlativo: correlativo
-        })
-        .then((response) => {
-            
-            const data = response.data;
-            if(Number(data.rowsAffected[0])>0){
-                resolve();             
-            }else{
-                reject();
-            }
-          
-        }, (error) => {
-            //funciones.AvisoError('Error en la solicitud');
-            reject();
-        });
-    })
-    
-};
 
-
-function fcn_delete_pedido(coddoc,correlativo,st,idBtn){
-   
-    let btn = document.getElementById(idBtn);
-
-    $("#modal_lista_documentos").modal('hide');
-
-
-        funciones.Confirmacion('¿Está seguro que desea Eliminar este Pedido?')
-        .then((value)=>{
-            if(value==true){
-
-                
-                funciones.solicitarClave()
-                    .then((clave)=>{
-                        if(clave==GlobalPassUsuario){
-
-                            btn.disabled = true;
-                            btn.innerHTML = '<i class="fal fa-trash fa-spin"></i>';
-
-                                delete_pedido(cmbEmpresa.value,coddoc,correlativo)
-                                .then(()=>{
-                                    funciones.Aviso('Pedido Eliminado Exitosamente!!')
-                                    tbl_lista_documentos();
-                                })
-                                .catch(()=>{
-                                    btn.disabled = false;
-                                    btn.innerHTML = '<i class="fal fa-trash"></i> Eliminar';
-                                    funciones.AvisoError('No se pudo eliminar');
-                                })
-                            
-                        }else{
-                            funciones.AvisoError('Clave incorrecta')
-                        }
-                    }
-                )        
-            }
-        });
-
- 
-};
-
-function delete_pedido (sucursal,coddoc,correlativo){
-    return new Promise((resolve,reject)=>{
-        axios.post('/ventas/deletepedidovendedor',{
-           sucursal:sucursal,
-           coddoc:coddoc,
-           correlativo:correlativo
-        })
-        .then((response) => {
-            let data = response.data;
-            if(Number(data.rowsAffected[0])>0){
-                resolve(data);             
-            }else{
-                reject();
-            }                     
-        }, (error) => {
-            reject();
-        });
-    })
-}
 
 //---------------------------
 //editar pedido
 //---------------------------
+
+
+
+//OPCIONES DEL DOCUMENTO
+function anular_factura(coddoc,correlativo,status,idbtn){
+
+
+    funciones.Confirmacion("¿Está seguro que desea ANULAR/DESANULAR este documento?")
+    
+    .then((value)=>{
+        if(value==true){
+
+            GF.get_anulacion_documento(coddoc,correlativo,status)
+            .then(()=>{
+                funciones.Aviso('Documento anulado exitosamente!!');
+                socket.emit('ANULACION',`Se ha anulado el documento: ${coddoc}-${correlativo} en la sede ${GlobalEmpnit}`);
+                tbl_lista_documentos();
+            })
+            .catch(()=>{
+                funciones.AvisoError('No se pudo anular')
+            })
+
+        }
+    })
+   
+
+};
