@@ -15,7 +15,8 @@ var router_general = require('./router/router_general');
 var router_empleados = require('./router/router_empleados');
 var router_productos = require('./router/router_productos');
 var router_pos = require('./router/router_pos');
-var router_tipodocumentos = require('./router/router_tipodocumentos')
+var router_tipodocumentos = require('./router/router_tipodocumentos');
+var router_clientes = require('./router/router_clientes');
 
 var router_reportes = require('./router/router_reportes');
 var router_despacho = require('./router/router_despacho');
@@ -156,6 +157,8 @@ app.use('/empleados', router_empleados);
 app.use('/productos', router_productos);
 app.use('/pos', router_pos);
 app.use('/tipodocumentos', router_tipodocumentos);
+app.use('/clientes', router_clientes);
+
 
 app.use('/reportes',router_reportes);
 app.use('/despacho',router_despacho);
